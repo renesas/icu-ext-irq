@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.11" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README-icu</title>
+  <style>
+
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+  <style type="text/css">:root {
+--brand: #2b0a8c;
+--accent: #e6007e;
+--ink: #1f2430;
+--muted: #667085;
+--line: #e4e7ec;
+--surface: #f7f7fb;
+}
+* {
+box-sizing: border-box;
+}
+html {
+scroll-behavior: smooth;
+}
+body {
+margin: 0 auto;
+max-width: 1120px;
+padding: 50px;
+color: var(--ink);
+background: #ffffff;
+font-family: "Segoe UI", Arial, sans-serif;
+line-height: 1.65;
+}
+a {
+color: var(--brand);
+}
+a:hover {
+color: var(--accent);
+}
+h1 {
+margin-top: 2.7rem;
+padding-bottom: 0.35rem;
+border-bottom: 2px solid var(--line);
+}
+h2 {
+margin-top: 2.4rem;
+padding-bottom: 0.3rem;
+border-bottom: 1px solid var(--line);
+}
+h3,
+h4,
+h5,
+h6 {
+margin-top: 2rem;
+}
+img {
+display: block;
+max-width: 100%;
+height: auto;
+margin: 1rem auto 0.35rem;
+}
+table {
+width: 100%;
+border-collapse: collapse;
+margin: 1.25rem 0;
+}
+th,
+td {
+border: 1px solid var(--line);
+padding: 0.7rem;
+vertical-align: top;
+}
+th {
+background: var(--surface);
+text-align: left;
+}
+blockquote {
+margin: 1.2rem 0;
+padding: 0.7rem 1rem;
+border-left: 4px solid var(--brand);
+background: var(--surface);
+}
+code {
+font-family: Consolas, "Courier New", monospace;
+}
+pre {
+overflow-x: auto;
+padding: 1rem;
+border-radius: 8px;
+background: var(--surface);
+}
+
+body > h1:first-of-type {
+margin: -50px calc(50% - 50vw) 3rem;
+padding: 3.5rem max(50px, calc((100vw - 1120px) / 2));
+border: 0;
+background: linear-gradient(135deg, #250777, #3e16a3);
+color: #ffffff;
+font-size: clamp(2rem, 5vw, 3.5rem);
+line-height: 1.1;
+}
+@media (max-width: 640px) {
+body {
+padding: 20px;
+}
+body > h1:first-of-type {
+margin-top: -20px;
+padding: 2.5rem 20px;
+}
+}
+</style>
+</head>
+<body>
+<h1 id="icu-external-irq-software-building-block-sbb">ICU External IRQ
+Software Building Block (SBB)</h1>
+<h2 id="1-overview">1. Overview</h2>
+<p>This Software Building Block (SBB) demonstrates a typical use of the
+Renesas Flexible Software Package (FSP) ICU HAL external-interrupt APIs.
+The reference application initializes and enables the ICU external IRQ
+driver. When the board user push button generates the configured
+external interrupt, the interrupt callback sets a flag; the application
+then clears the flag and toggles the first on-board LED.</p>
+<p>This document covers only these reference boards:</p>
+<ul>
+<li>FPB-RA0L1</li>
+<li>FPB-RA2E3</li>
+<li>FPB-RA4E2</li>
+<li>FPB-RA6E2</li>
+<li>FPB-RA8E1</li>
+</ul>
+<p>The source also provides UART console output. The reference
+application initializes the console, prints SBB/FSP information, reports
+button presses and LED state, and traps after selected initialization or
+I/O errors.</p>
+<h2 id="2-use-case-demonstrated">2. Use Case Demonstrated</h2>
+<p>The SBB demonstrates an interrupt-driven GPIO event using the ICU
+HAL:</p>
+<ol type="1">
+<li>Initialize the external IRQ driver.</li>
+<li>Enable the configured external interrupt.</li>
+<li>Detect a user push-button event in the external IRQ callback.</li>
+<li>Set a software flag from the callback.</li>
+<li>Process the flag in application context.</li>
+<li>Read and toggle the first on-board LED.</li>
+<li>Print status information to the serial terminal.</li>
+</ol>
+<p>The core pattern is useful when an application needs to react to an
+external digital event without continuously polling the input pin.</p>
+<h2 id="3-software-organization">3. Software Organization</h2>
+<h3 id="31-reusable-sbb-code">3.1 Reusable SBB code</h3>
+<p>The reusable ICU wrapper is implemented by:</p>
+<ul>
+<li><code>icu_ep.c</code></li>
+<li><code>icu_ep.h</code></li>
+</ul>
+<p>The core exposes initialization, enable, and deinitialization
+functions around the FSP external IRQ driver. The callback records the
+interrupt event by setting <code>g_sw_press</code> when the callback
+channel equals <code>USER_SW_IRQ_NUMBER</code>.</p>
+<h3 id="32-demoreference-application-code">3.2 Demo/reference
+application code</h3>
+<p>The reference application is implemented by:</p>
+<ul>
+<li><code>icu_example_app.c</code></li>
+<li><code>icu_example_app.h</code></li>
+</ul>
+<p><code>icu_example_app_run()</code> is the single application entry
+point. It initializes the UART console, prints information,
+initializes/enables the ICU SBB, waits for <code>g_sw_press</code>,
+toggles the first board LED using IOPORT APIs, and prints the resulting
+LED state.</p>
+<p>The UART console (<code>console/uart_console.h</code>), terminal
+messages, LED demonstration, and error-print/trap behavior are
+demonstration infrastructure rather than the minimal ICU wrapper
+itself.</p>
+<h3 id="33-generatedproject-configuration">3.3 Generated/project
+configuration</h3>
+<p>The SBB includes <code>hal_data.h</code> and uses FSP-generated
+objects such as <code>g_external_irq_ctrl</code>,
+<code>g_external_irq_cfg</code>, and <code>g_ioport_ctrl</code>. Their
+generation and detailed configuration are not described in the supplied
+<code>readme.txt</code>; therefore, preserve or recreate equivalent FSP
+configuration when porting the SBB.</p>
+<h2 id="4-public-functions-to-review-first">4. Public Functions to
+Review First</h2>
+<h3 id="icu_init"><code>icu_init()</code></h3>
+<p>Opens the FSP ICU external IRQ instance by calling
+<code>R_ICU_ExternalIrqOpen()</code> with
+<code>g_external_irq_ctrl</code> and
+<code>g_external_irq_cfg</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>fsp_err_t icu_init<span class="op">(</span><span class="dt">void</span><span class="op">);</span></span></code></pre></div>
+<h3 id="icu_enable"><code>icu_enable()</code></h3>
+<p>Enables the opened external IRQ instance through
+<code>R_ICU_ExternalIrqEnable()</code>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>fsp_err_t icu_enable<span class="op">(</span><span class="dt">void</span><span class="op">);</span></span></code></pre></div>
+<h3 id="icu_deinit"><code>icu_deinit()</code></h3>
+<p>Closes the ICU external IRQ instance with
+<code>R_ICU_ExternalIrqClose()</code> if the control object indicates
+that it is open.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> icu_deinit<span class="op">(</span><span class="dt">void</span><span class="op">);</span></span></code></pre></div>
+<h3 id="icu_example_app_run"><code>icu_example_app_run()</code></h3>
+<p>Reference-application entry point. Review this function to understand
+how the reusable ICU functions are integrated with UART logging, the
+push-button flag, and LED I/O.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> icu_example_app_run<span class="op">(</span><span class="dt">void</span><span class="op">);</span></span></code></pre></div>
+<h3 id="irq_ep_callback"><code>irq_ep_callback()</code></h3>
+<p>This is the user-defined external IRQ callback in
+<code>icu_ep.c</code>. When the callback channel matches
+<code>USER_SW_IRQ_NUMBER</code>, it sets <code>g_sw_press = true</code>.
+Although it is part of the interrupt integration, it is not declared in
+the supplied <code>icu_ep.h</code> public header.</p>
+<h2 id="5-core-execution-flow">5. Core Execution Flow</h2>
+<pre class="text"><code>icu_example_app_run()
+    |
+    +-- uart_console_init()
+    +-- R_FSP_VersionGet()
+    +-- icu_init()
+    |     +-- R_ICU_ExternalIrqOpen()
+    +-- icu_enable()
+          +-- R_ICU_ExternalIrqEnable()
+
+External push-button interrupt
+    |
+    +-- irq_ep_callback()
+          +-- if channel == USER_SW_IRQ_NUMBER
+                  g_sw_press = true
+
+Application loop
+    |
+    +-- if g_sw_press
+          +-- clear flag
+          +-- R_IOPORT_PinRead()
+          +-- invert LED state
+          +-- R_IOPORT_PinWrite()
+          +-- print LED state</code></pre>
+<h2 id="6-reference-board-configuration-assumptions">6. Reference Board
+Configuration Assumptions</h2>
+<h3 id="fpb-ra0l1">FPB-RA0L1</h3>
+<ul>
+<li>User input: <strong>SW1 push button</strong>.</li>
+<li>External IRQ channel expected by the source: <strong>IRQ0</strong>
+(<code>USER_SW_IRQ_NUMBER = 0x00</code>).</li>
+<li>Place jumper <strong>J9 on pins 1-2</strong> to use the on-board
+debug functionality.</li>
+<li>Close <strong>E20</strong> to use <strong>P002 for
+LED1</strong>.</li>
+</ul>
+<h3 id="fpb-ra2e3">FPB-RA2E3</h3>
+<ul>
+<li>User input: <strong>S1 push button</strong>.</li>
+<li>External IRQ channel expected by the source: <strong>IRQ0</strong>
+(<code>USER_SW_IRQ_NUMBER = 0x00</code>).</li>
+<li>Close <strong>E25, E28, E46, and E47</strong> to use the J-Link OB
+VCOM serial terminal connection.</li>
+<li>Connect a jumper wire to short <strong>NMI P200 (J3:21)</strong> to
+<strong>P206 (J3:18)</strong>.</li>
+</ul>
+<h3 id="fpb-ra4e2">FPB-RA4E2</h3>
+<ul>
+<li>User input: <strong>S1 push button</strong>.</li>
+<li>External IRQ channel expected by the source: <strong>IRQ9</strong>
+(<code>USER_SW_IRQ_NUMBER = 0x09</code>).</li>
+<li>No additional FPB-RA4E2-specific jumper or wiring requirement is
+stated in the supplied <code>readme.txt</code>.</li>
+</ul>
+<h3 id="fpb-ra6e2">FPB-RA6E2</h3>
+<ul>
+<li>User input: <strong>S1 push button</strong>.</li>
+<li>External IRQ channel expected by the source: <strong>IRQ9</strong>
+(<code>USER_SW_IRQ_NUMBER = 0x09</code>).</li>
+<li>No additional FPB-RA6E2-specific jumper or wiring requirement is
+stated in the supplied <code>readme.txt</code>.</li>
+</ul>
+<h3 id="fpb-ra8e1">FPB-RA8E1</h3>
+<ul>
+<li>User input: <strong>S1 push button</strong>.</li>
+<li>External IRQ channel expected by the source: <strong>IRQ13</strong>
+(<code>USER_SW_IRQ_NUMBER = 0x0D</code>).</li>
+<li>No additional FPB-RA8E1-specific jumper or wiring requirement is
+stated in the supplied <code>readme.txt</code>.</li>
+</ul>
+<p>For every board, connect the board USB debug port to the host PC with
+the USB cable appropriate for that board for programming and
+debugging.</p>
+<h2 id="7-serial-terminal-assumptions">7. Serial Terminal
+Assumptions</h2>
+<p>The supplied reference documentation specifies the following terminal
+settings:</p>
+<ul>
+<li>Speed: <strong>115200 baud</strong></li>
+<li>Data: <strong>8 bit</strong></li>
+<li>Parity: <strong>none</strong></li>
+<li>Stop bits: <strong>1 bit</strong></li>
+<li>Flow control: <strong>none</strong></li>
+<li>Port: J-Link On-Board provided serial port</li>
+</ul>
+<p>For Tera Term, the supplied documentation also specifies:</p>
+<ul>
+<li><code>Setup -&gt; Terminal... -&gt; New-line</code>: Receive =
+<strong>CR</strong>, Transmit = <strong>CR</strong></li>
+<li>Enable <code>Setup -&gt; Terminal... -&gt; Local echo</code> if
+typed characters should be echoed.</li>
+</ul>
+<h2 id="8-what-must-change-when-porting-to-another-board-or-project">8.
+What Must Change When Porting to Another Board or Project</h2>
+<p>The supplied sources show which integration points are board/project
+dependent, but the supplied <code>readme.txt</code> does not provide
+complete porting values for boards beyond the documented reference
+configurations.</p>
+<p>Review and adapt the following when integrating the SBB:</p>
+<h3 id="board-and-pins">Board and pins</h3>
+<ul>
+<li>External IRQ input and its FSP configuration
+(<code>g_external_irq_cfg</code>).</li>
+<li><code>USER_SW_IRQ_NUMBER</code> so it matches the configured
+interrupt channel.</li>
+<li>Board push-button wiring or routing.</li>
+<li>LED selection and IOPORT configuration. The demo operates on
+<code>g_bsp_leds.p_leds[0]</code>.</li>
+<li>Board-specific jumpers, solder bridges, or external wiring described
+above.</li>
+</ul>
+<h3 id="uart">UART</h3>
+<p>The demo depends on <code>uart_console_init()</code>,
+<code>uart_console_flush()</code>, and <code>printf()</code> output. If
+the target project does not need a console, treat this as demo
+functionality and integrate the ICU wrapper independently. If console
+output is retained, make the target UART routing and board connections
+consistent with the project’s console implementation.</p>
+<h3 id="clocks-and-timing">Clocks and timing</h3>
+<p>No ICU clock frequency, debounce interval, latency target, or timing
+constraint is specified in the supplied <code>readme.txt</code> or
+source files. Use the values required by the target FSP configuration
+and application rather than assuming undocumented settings from this
+reference.</p>
+<h3 id="memory">Memory</h3>
+<p>No RAM, ROM, heap, or stack requirement is specified in the supplied
+material. Measure and configure these for the target build if resource
+budgets are important.</p>
+<h3 id="task-priorities--rtos">Task priorities / RTOS</h3>
+<p>The supplied application uses an infinite foreground loop and does
+not document RTOS tasks, priorities, queues, semaphores, or scheduling
+assumptions. If incorporated into an RTOS application, the tasking model
+and priority choices are application-specific.</p>
+<h3 id="middleware">Middleware</h3>
+<p>No middleware requirement is documented beyond the included UART
+console abstraction and FSP/BSP driver interfaces used by the
+example.</p>
+<h2 id="9-dependencies-and-hardware-resources">9. Dependencies and
+Hardware Resources</h2>
+<p>The supplied code directly depends on:</p>
+<ul>
+<li>Renesas FSP types and version API.</li>
+<li>FSP ICU HAL external IRQ APIs:
+<ul>
+<li><code>R_ICU_ExternalIrqOpen()</code></li>
+<li><code>R_ICU_ExternalIrqEnable()</code></li>
+<li><code>R_ICU_ExternalIrqClose()</code></li>
+</ul></li>
+<li>FSP IOPORT APIs used by the demo:
+<ul>
+<li><code>R_IOPORT_PinRead()</code></li>
+<li><code>R_IOPORT_PinWrite()</code></li>
+</ul></li>
+<li>FSP-generated/configured objects:
+<ul>
+<li><code>g_external_irq_ctrl</code></li>
+<li><code>g_external_irq_cfg</code></li>
+<li><code>g_ioport_ctrl</code></li>
+</ul></li>
+<li>BSP LED information through <code>g_bsp_leds</code>.</li>
+<li>The project UART console abstraction used by the reference
+application.</li>
+<li>One configured external IRQ resource associated with the board push
+button.</li>
+<li>One on-board LED used by the demo.</li>
+<li>USB debug/programming connection.</li>
+</ul>
+<p>FPB-RA2E3 additionally requires the jumper-wire connection and
+solder-bridge configuration listed in the board section. FPB-RA0L1
+additionally requires its documented debug jumper and LED solder
+bridge.</p>
+<h2 id="10-demonstrated-behavior-and-performance">10. Demonstrated
+Behavior and Performance</h2>
+<p>The demonstrated functional behavior is:</p>
+<ul>
+<li>The ICU external IRQ instance is opened and enabled.</li>
+<li>Pressing the selected user push button triggers the configured
+external IRQ.</li>
+<li>The callback sets <code>g_sw_press</code> for the expected IRQ
+channel.</li>
+<li>The application detects the flag and toggles the first on-board
+LED.</li>
+<li>A terminal message reports the button press and resulting LED
+state.</li>
+</ul>
+<p>The supplied material does <strong>not</strong> provide measured
+interrupt latency, maximum event rate, CPU utilization, memory
+footprint, debounce performance, power consumption, or other
+quantitative performance results. These should not be inferred from this
+reference project.</p>
+<h2 id="11-file-ownership-and-modification-guidance">11. File Ownership
+and Modification Guidance</h2>
+<h3 id="reusable-sbb-source">Reusable SBB source</h3>
+<ul>
+<li><code>icu_ep.c</code>: reusable ICU wrapper and interrupt
+callback.</li>
+<li><code>icu_ep.h</code>: reusable interface declarations, shared flag
+declaration, and board-to-IRQ-channel selection.</li>
+</ul>
+<p>These are the primary files to review when adapting or extending the
+SBB behavior.</p>
+<h3 id="demoreference-application">Demo/reference application</h3>
+<ul>
+<li><code>icu_example_app.c</code>: demonstration integration, UART
+output, LED toggle logic, and demo error handling.</li>
+<li><code>icu_example_app.h</code>: demonstration entry point and
+terminal banner/information strings.</li>
+</ul>
+<p>Application-specific behavior can be replaced without changing the
+basic ICU wrapper contract.</p>
+<h3 id="generated-or-preset-project-content">Generated or preset project
+content</h3>
+<p><code>hal_data.h</code> and the referenced FSP
+instances/configuration are generated/project configuration
+dependencies. The supplied files do not describe their generation policy
+in detail. In an FSP project, make configuration changes through the
+project’s intended FSP configuration flow rather than relying on
+undocumented manual edits to generated content.</p>
+<h3 id="documentation">Documentation</h3>
+<p><code>readme.txt</code> is the source documentation supplied with the
+reference example. This Markdown file consolidates the relevant
+information for the five boards listed in the scope.</p>
+<h2 id="12-updating-to-a-newer-sbb-release-after-local-modifications">12.
+Updating to a Newer SBB Release After Local Modifications</h2>
+<p>The supplied files do not define a formal upgrade, merge, or
+backward-compatibility procedure for adopting a newer SBB release.
+Therefore, local-source changes should not be assumed to merge
+automatically with a future release.</p>
+<p>A practical source-control strategy is to keep product-specific
+changes separated from the reusable SBB whenever possible:</p>
+<ol type="1">
+<li>Keep board/application behavior in application or configuration
+layers where feasible.</li>
+<li>Track intentional modifications to <code>icu_ep.c</code> and
+<code>icu_ep.h</code> in version control.</li>
+<li>When adopting a newer SBB revision, compare the new reusable files
+with the version on which the local changes were based.</li>
+<li>Reapply or merge only the required product-specific changes, then
+rebuild and retest the external IRQ and LED behavior on the target
+board.</li>
+<li>Recheck FSP-generated configuration if the new release changes
+required instances, APIs, or configuration assumptions.</li>
+</ol>
+<p>This upgrade strategy is integration guidance; it is not specified by
+the supplied <code>readme.txt</code>.</p>
+<h2 id="13-customer-integration-checklist">13. Customer Integration
+Checklist</h2>
+<p>Before reusing this SBB, verify:</p>
+<ul class="task-list">
+<li><label><input type="checkbox"></input>The target is one of the
+supported/reference boards or has an equivalent external IRQ
+configuration.</label></li>
+<li><label><input type="checkbox"></input>The push-button signal is routed to
+the configured external IRQ input.</label></li>
+<li><label><input type="checkbox"></input><code>USER_SW_IRQ_NUMBER</code>
+matches the callback channel expected for the target board.</label></li>
+<li><label><input type="checkbox"></input>The FSP external IRQ instance
+provides <code>g_external_irq_ctrl</code> and
+<code>g_external_irq_cfg</code> or the code has been adapted to the
+project’s instance names.</label></li>
+<li><label><input type="checkbox"></input>The LED used by the reference
+application is available through <code>g_bsp_leds.p_leds[0]</code>, or
+the demo code has been adapted.</label></li>
+<li><label><input type="checkbox"></input>Required board jumpers/solder
+bridges/wires are configured.</label></li>
+<li><label><input type="checkbox"></input>UART console routing is configured
+if the demo terminal output is retained.</label></li>
+<li><label><input type="checkbox"></input>The terminal is configured for
+115200, 8 data bits, no parity, 1 stop bit, and no flow
+control.</label></li>
+<li><label><input type="checkbox"></input>Target-specific clock, memory, and
+RTOS requirements have been reviewed because the supplied documentation
+does not prescribe them.</label></li>
+<li><label><input type="checkbox"></input>Product-specific changes are
+isolated and tracked to simplify later SBB updates.</label></li>
+</ul>
+<h2 id="14-source-files-reviewed">14. Source Files Reviewed</h2>
+<ul>
+<li><code>readme.txt</code></li>
+<li><code>icu_ep.c</code></li>
+<li><code>icu_ep.h</code></li>
+<li><code>icu_example_app.c</code></li>
+<li><code>icu_example_app.h</code></li>
+</ul>
+</body>
+</html>
