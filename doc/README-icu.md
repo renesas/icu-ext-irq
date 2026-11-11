@@ -1,4 +1,4 @@
-# ICU External IRQ Software Building Block (SBB)
+# ICU
 
 ## 1. Overview
 
